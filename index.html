@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //ES6 Advanced Topics
+
+        // Q1
+        function demonstrateScoping() {
+
+            var globalScope = "I'm a var variable, and I'm function-scoped or globally-scoped if declared outside a function.";
+
+            let blockScopeLet = "I'm a let variable, and I'm block-scoped.";
+            const blockScopeConst = "I'm a const variable, block-scoped and cannot be reassigned.";
+
+            return `
+        Explanation of Scoping:
+        1. Var: ${globalScope}
+        2. Let: ${blockScopeLet}
+        3. Const: ${blockScopeConst}
+    `;
+        };
+
+        console.log(demonstrateScoping());
+
+        // Q2
+        function createMultiplier(multiplier) {
+            return function (number) {
+                return number * multiplier;
+            };
+        };
+        const double = createMultiplier(2);
+        const triple = createMultiplier(3);
+
+
+        console.log(double(5));
+        console.log(double(8));
+        console.log(triple(4));
+        console.log(triple(10));
+
+        // Q3
+        function getUserInfo(name, age, country = 'Unknown', city = 'Unknown') {
+            return `${name} is ${age} years old , from ${city} , ${country} `
+        }
+        const user = {
+            name: 'Umama',
+            age: 19,
+            country: 'Karachi',
+            city: 'Pakistan'
+        };
+        console.log(getUserInfo(user.name, user.age, user.city, user.country));
+
+        //  Q4
+        function calculateTotal(price, ...discounts) {
+            for (const discount of discounts) {
+                price -= discount;
+            }
+            return price;
+        };
+        const finalPrice = calculateTotal(1000, 100, 50, 25);
+        console.log(finalPrice);
+
+        // Q5
+        const calculator = {
+            add: (a, b) => a + b,
+
+            subtract: (a, b) => a - b
+        }
+        console.log(calculator.add(5, 3));
+        console.log(calculator.subtract(10, 4));
+        console.log(calculator.add(15, 20));
+        console.log(calculator.subtract(50, 25));
+
+        // Q6
+        const books = [
+            { title: "Peer-e-Kamil", author: "Umera Ahmed", yearPublished: 2004 },
+            { title: "Mushaf", author: "Nemrah Ahmed", yearPublished: 2011 },
+            { title: "Pir Baba", author: "Bano Qudsia", yearPublished: 1981 }
+        ];
+
+        function logBooks(bookArray) {
+            for (const book of bookArray) {
+                console.log(`"${book.title}" by ${book.author}, published in ${book.yearPublished}.`);
+            }
+        };
+        logBooks(books);
+
+        // Q7
+        function* idGenerator() {
+            let id = 1;
+            while (true) {
+                yield id++;
+            }
+        };
+        const generator = idGenerator();
+        console.log(generator.next().value);
+        console.log(generator.next().value);
+        console.log(generator.next().value);
+        console.log(generator.next().value);
+        console.log(generator.next().value);
+
+        // Q8
+
+        // This question's answern in file "app.js"
+
+        // Q9
+        const student = {
+            name: "Ali",
+            age: 20,
+            grade: "A",
+            subjects: ["Math", "Science", "English"]
+        };
+        for (let property in student) {
+            console.log(`${property}: ${student[property]}`);
+        };
+
+        // Q10
+        const numbers = [1, 2, 3, 4, 5,];
+        const squaredNum = numbers.map(num => num ** 2);
+
+        console.log(`Original Array : ${numbers}`);
+        console.log(`Squared Array : ${squaredNum}`);
+
+        // Q11
+        function operate(num1, num2, callback) {
+            return callback(num1, num2);
+        };
+        function add(num1, num2) {
+            return num1 + num2;
+        };
+        function subtract(num1, num2) {
+            return num1 - num2;
+        };
+        let resultAdd = operate(10, 5, add);
+        let resultSubtract = operate(10, 5, subtract);
+
+        console.log(`Addition Result: ${resultAdd}`);
+        console.log(`Subtraction Result: ${resultSubtract}`);
+
+        // Q12
+        setTimeout(() => {
+            console.log('Hello Wrold!');
+
+        }, 3000);
+
+        // Q13
+        const intervalId = setInterval(() => {
+            const currentTime = new Date().toLocaleTimeString();
+            console.log(`Current Time: ${currentTime}`);
+        }, 2000);
+
+        setTimeout(() => {
+            clearInterval(intervalId);
+            console.log("Interval Cleared");
+        }, 10000);
+
+        // Q14
+        function fetchData() {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve('Data Received');
+                }, 2000);
+            });
+        };
+        fetchData()
+            .then((message) => {
+                console.log("Success:", message);
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+
+        // Q15
+        async function fetchData() {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve("Data received")
+                }, 2000);
+            });
+        };
+
+        async function handleFetchData() {
+            try {
+                const data = await fetchData();
+                console.log("Success:", data);
+
+            } catch (error) {
+                console.error("Error:", error)
+            }
+        };
+
+        handleFetchData();
+
+        // Q16
+        function calculatePower(base, exponent) {
+            return base ** exponent;
+        };
+        console.log(calculatePower(2, 3));
+        console.log(calculatePower(5, 2));
+        console.log(calculatePower(10, 0));
+        console.log(calculatePower(7, -1));
+        console.log(calculatePower(-3, 3));
+
+        // Q17
+        class Animal {
+            constructor(name, species) {
+                this.name = name;
+                this.species = species;
+            }
+            speak() {
+                console.log(`${this.species} named ${this.name} says ${this.getSound()}!`);
+            }
+            getSound() {
+                switch (this.species.toLowerCase()) {
+                    case "dog":
+                        return "Woof";
+                    case "cat":
+                        return "Meow";
+                    case "cow":
+                        return "Moo";
+                    case "bird":
+                        return "Chirp";
+                    default:
+                        return "some sound";
+                }
+            }
+        };
+
+        const dog = new Animal("Buddy", "Dog");
+        const cat = new Animal("Whiskers", "Cat");
+        const cow = new Animal("Daisy", "Cow");
+        const bird = new Animal("Tweety", "Bird");
+
+        dog.speak();
+        cat.speak();
+        cow.speak();
+        bird.speak();
+
+        // Q18
+        function checkEvenOdd(number) {
+            return number % 2 === 0 ? "Even" : "Odd";
+        };
+        console.log(checkEvenOdd(10));
+        console.log(checkEvenOdd(7));
+        console.log(checkEvenOdd(0));
+        console.log(checkEvenOdd(-3));
+        console.log(checkEvenOdd(18));
+
+        // Q19
+        const user2 = {
+            name : "John Doe",
+            address :{
+                city: "New York"
+            }
+        };
+
+        function logCity(userObject) {
+            const city = userObject?.address?.city;
+            console.log(city  || "City not available");
+        };
+
+        logCity(user2);
+        logCity({name: "John Doe"});
+        logCity({});
+        logCity(undefined);
+    </script>
+
+    <script type="module" src="app.js"></script>
+</body>
+
+</html>
